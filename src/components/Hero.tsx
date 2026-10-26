@@ -3,262 +3,314 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
-  Star, ArrowRight, PhoneCall, CheckCircle2, Lock, Zap, 
-  RefreshCw, ShieldCheck, Sparkles, AlertTriangle, Layers,
-  Calendar, Globe, DollarSign, MessageSquare, Users
+  Star, ArrowRight, PhoneCall, CheckCircle2, Lock, 
+  RotateCw, Phone, Globe, Wallet, Mail, Users, AlertTriangle, 
+  Play, Pause, Sparkles, Calendar as CalendarIcon
 } from "lucide-react";
 
 export default function Hero() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [simState, setSimState] = useState<"initial" | "booking" | "synced">("synced");
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [syncedMode, setSyncedMode] = useState(false); // false = without channel manager, true = with Yourbnb
+  const [activeFeature, setActiveFeature] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setSimState((prev) => {
-        if (prev === "initial") return "booking";
-        if (prev === "booking") return "synced";
-        return "initial";
-      });
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      setSyncedMode((prev) => !prev);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
 
-  const featureTabs = [
-    { title: "Channel Manager", sub: "Realtime 0.8s sync across 50+ OTAs", icon: Layers },
-    { title: "Offline Booking", sub: "Walk-in, phone & WhatsApp invoices", icon: PhoneCall },
-    { title: "Direct Website", sub: "0% commission instant booking portal", icon: Globe },
-    { title: "Expenses & Profits", sub: "Track net P&L, rent & staff payouts", icon: DollarSign },
-    { title: "Unified Inbox", sub: "All guest chats in one single thread", icon: MessageSquare, badge: "Soon" },
-    { title: "Co-Hosts & Team", sub: "Cleaner & manager role permissions", icon: Users },
+  const channels = [
+    { id: "airbnb", name: "Airbnb", color: "#ff5a5f", letter: "A" },
+    { id: "booking", name: "Booking.com", color: "#003b95", letter: "B." },
+    { id: "vrbo", name: "Vrbo", color: "#3563e9", letter: "V" },
+    { id: "agoda", name: "Agoda", color: "#6c3fd1", letter: "Ag" },
+    { id: "mmt", name: "MakeMyTrip", color: "#e5195e", letter: "my" },
+    { id: "goibibo", name: "Goibibo", color: "#f58220", letter: "go" },
+    { id: "website", name: "Your Website", color: "#0d9488", letter: "🌐" },
+  ];
+
+  const features = [
+    { title: "Channel Manager", desc: "Realtime sync across all channels", icon: RotateCw, href: "/channel-manager" },
+    { title: "Offline Booking", desc: "Walk-in, phone and social media bookings", icon: Phone, href: "/offline-bookings" },
+    { title: "Direct Website", desc: "Your own website with online payments", icon: Globe, href: "/direct-booking-website" },
+    { title: "Expenses & Profits", desc: "Know your true profits", icon: Wallet, href: "/expenses-and-profits" },
+    { title: "Unified Inbox", desc: "Airbnb, Booking.com messages in one inbox", icon: Mail, badge: "Soon", href: "/unified-inbox" },
+    { title: "Co-Hosts & Team", desc: "Let your team manage your business", icon: Users, href: "/co-hosts-and-team" },
   ];
 
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-[#fff1ef]/40 via-white to-white">
-      {/* Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#ff3823]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
-
+    <section className="relative pt-24 pb-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Rating Pill */}
-        <div className="flex justify-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm text-xs text-gray-700">
-            <div className="flex items-center gap-1 text-amber-500">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column (Copy & Call to Actions) */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Google Rating Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-gray-200/80 shadow-sm text-xs text-gray-700">
+              <div className="w-4 h-4 rounded-full bg-[#4285f4] flex items-center justify-center text-white font-bold text-[10px]">
+                G
+              </div>
               <span className="font-bold text-gray-900">4.9</span>
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <div className="flex text-amber-400 text-xs">
+                ★★★★★
+              </div>
+              <span className="text-gray-300">·</span>
+              <span className="text-gray-600">Trusted by <strong className="text-gray-900 font-semibold">6,000+ properties</strong></span>
+            </div>
+
+            {/* Main Headline with Editorial Italic Serif */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-gray-900 tracking-tight leading-[1.08] font-display">
+              PMS & Channel <br />
+              Manager for{" "}
+              <span className="font-serif italic font-normal text-[#ff3823] tracking-normal">
+                Vacation Rentals & Homestays
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-base text-gray-600 leading-relaxed max-w-lg">
+              Manage Airbnb, Booking.com, Vrbo, direct bookings, pricing and availability from{" "}
+              <strong className="text-[#ff3823] font-bold">one powerful app</strong>.
+            </p>
+
+            {/* Sync Channels Strip */}
+            <div className="space-y-2.5 pt-1">
+              <span className="text-xs text-gray-500 font-medium block">
+                Syncs with 50+ channels · from 1 to 1,000 properties
+              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                {channels.map((ch) => (
+                  <div
+                    key={ch.id}
+                    title={ch.name}
+                    className="w-10 h-10 rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center font-bold text-xs relative hover:scale-105 transition-transform"
+                    style={{ color: ch.color }}
+                  >
+                    <span>{ch.letter}</span>
+                    {/* Glowing Sync Dot */}
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white animate-pulse" />
+                  </div>
                 ))}
-              </div>
-            </div>
-            <span className="text-gray-300">|</span>
-            <span className="font-medium">Trusted by <strong className="text-gray-900">6,000+ vacation properties</strong></span>
-          </div>
-        </div>
-
-        {/* Hero Title & Subtitle */}
-        <div className="text-center max-w-4xl mx-auto mb-10">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight font-display leading-[1.12]">
-            PMS & Channel Manager for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff3823] to-[#ff7866]">
-              Vacation Rentals & Homestays
-            </span>
-          </h1>
-          <p className="mt-5 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Manage Airbnb, Booking.com, MakeMyTrip, Vrbo, direct bookings, pricing, and availability from{" "}
-            <strong className="text-gray-900 font-semibold">one powerful app</strong>.
-          </p>
-
-          {/* Supported Channels Strip */}
-          <div className="mt-8 flex flex-col items-center gap-3">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Syncs with 50+ channels · from 1 to 1,000 properties
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-2xl">
-              {[
-                { name: "Airbnb", color: "#ff5a5f", bg: "#fde8ea" },
-                { name: "Booking.com", color: "#003b95", bg: "#e6eef8" },
-                { name: "MakeMyTrip", color: "#e5195e", bg: "#fde7ef" },
-                { name: "Agoda", color: "#6c3fd1", bg: "#eee8fb" },
-                { name: "Vrbo", color: "#3563e9", bg: "#ebf1ff" },
-                { name: "Goibibo", color: "#f58220", bg: "#fff2e6" },
-                { name: "Your Website", color: "#0d9488", bg: "#e6fffa" },
-              ].map((ch) => (
-                <div 
-                  key={ch.name}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm text-xs font-semibold text-gray-800 hover:scale-105 transition-transform"
-                >
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: ch.color }} />
-                  {ch.name}
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping ml-0.5" />
-                </div>
-              ))}
-              <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold">+50 more</span>
-            </div>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/start-trial"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#ff3823] text-white font-semibold text-base shadow-xl shadow-[#ff3823]/30 hover:bg-[#e5220d] hover:shadow-2xl hover:shadow-[#ff3823]/40 transition-all flex items-center justify-center gap-2"
-            >
-              Start 30-day free trial <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              href="/book-a-demo"
-              className="w-full sm:w-auto px-7 py-4 rounded-full bg-white text-gray-800 font-semibold text-base border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-sm"
-            >
-              <PhoneCall className="w-4 h-4 text-[#ff3823]" /> Talk to our expert
-            </Link>
-          </div>
-        </div>
-
-        {/* Live Interactive Channel Sync Simulation Widget */}
-        <div className="max-w-5xl mx-auto rounded-3xl bg-white border border-gray-200/80 shadow-2xl p-4 sm:p-6 lg:p-8 relative overflow-hidden">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-6 border-b border-gray-100 gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Two-Way Live Sync Active (0.8s)
+                <span className="h-10 px-3 rounded-xl bg-gray-100 border border-gray-200 text-xs font-bold text-gray-600 flex items-center justify-center hover:bg-gray-200 cursor-pointer">
+                  +50
                 </span>
-                <span className="text-xs text-gray-400">• Ocean View Villa #1001</span>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mt-1 font-display">
-                Automated Multi-Channel Calendar Simulation
-              </h3>
             </div>
-            
-            <div className="flex items-center gap-2 text-xs font-medium text-gray-500 bg-gray-50 p-1.5 rounded-xl border border-gray-100">
-              <span>Simulation State:</span>
-              <button 
-                onClick={() => setSimState("initial")}
-                className={`px-2.5 py-1 rounded-lg transition-colors ${simState === "initial" ? "bg-white text-gray-900 shadow-sm font-semibold" : "hover:text-gray-900"}`}
+
+            {/* CTA Buttons */}
+            <div className="pt-3 flex flex-wrap items-center gap-3.5">
+              <Link
+                href="/start-trial"
+                className="px-7 py-3.5 rounded-full bg-[#ff3823] hover:bg-[#e5220d] text-white font-bold text-sm shadow-lg shadow-[#ff3823]/25 transition-all"
               >
-                1. Conflict Risk
-              </button>
-              <button 
-                onClick={() => setSimState("synced")}
-                className={`px-2.5 py-1 rounded-lg transition-colors ${simState === "synced" ? "bg-emerald-600 text-white shadow-sm font-semibold" : "hover:text-gray-900"}`}
+                Start free trial
+              </Link>
+              <Link
+                href="/book-a-demo"
+                className="px-6 py-3.5 rounded-full bg-white hover:bg-gray-50 text-gray-800 font-semibold text-sm border border-gray-200/90 shadow-sm transition-all flex items-center gap-2"
               >
-                2. Auto Synced
-              </button>
+                <CalendarIcon className="w-4 h-4 text-gray-600" />
+                <span>Talk to our expert</span>
+              </Link>
+            </div>
+
+            {/* Special Promo Card */}
+            <div className="p-4 rounded-2xl bg-[#fff8eb] border border-amber-200/70 text-xs flex items-center justify-between gap-3 text-gray-800 shadow-sm">
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl">🪔</span>
+                <div>
+                  <div className="font-bold text-gray-900">
+                    Special launch offer — <span className="text-[#ff3823]">up to 35% off</span>
+                  </div>
+                  <div className="text-gray-500 text-[11px]">New hosts only · Limited time</div>
+                </div>
+              </div>
+              <Link
+                href="/pricing"
+                className="px-3 py-1.5 rounded-full bg-white border border-amber-300 font-bold text-gray-900 hover:bg-amber-50 shrink-0 text-[11px]"
+              >
+                See pricing
+              </Link>
             </div>
           </div>
 
-          {/* Sync Simulator Grid */}
-          <div className="overflow-x-auto">
-            <div className="min-w-[680px]">
-              {/* Table Header: Days */}
-              <div className="grid grid-cols-8 gap-2 text-center text-xs font-semibold text-gray-500 mb-2">
-                <div className="text-left pl-2">Channel</div>
-                <div>Mon 12</div>
-                <div>Tue 13</div>
-                <div className="bg-red-50 text-[#ff3823] rounded-lg py-1">Wed 14</div>
-                <div className="bg-red-50 text-[#ff3823] rounded-lg py-1">Thu 15</div>
-                <div>Fri 16</div>
-                <div className="bg-amber-50 text-amber-700 rounded-lg py-1">Sat 17</div>
-                <div className="bg-amber-50 text-amber-700 rounded-lg py-1">Sun 18</div>
+          {/* Right Column (Interactive iPad Simulation Widget + 2x3 Grid) */}
+          <div className="lg:col-span-7 space-y-5">
+            {/* Dark Tablet Device Frame */}
+            <div className="bg-[#1c1c20] text-white rounded-[32px] p-4 sm:p-6 shadow-2xl border border-gray-800 relative overflow-hidden">
+              {/* Device Top Control Bar */}
+              <div className="flex items-center justify-between pb-4 border-b border-gray-800/80 mb-4">
+                {/* Simulation Mode Toggle */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSyncedMode(false)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                      !syncedMode
+                        ? "bg-red-500/20 text-red-400 border border-red-500/40 shadow-sm"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    Without a channel manager
+                  </button>
+                  <button
+                    onClick={() => setSyncedMode(true)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                      syncedMode
+                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> With Yourbnb (0.8s Sync)
+                  </button>
+                </div>
+
+                {/* Play/Pause Button */}
+                <button
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-[11px] font-mono transition-colors"
+                >
+                  {isPlaying ? (
+                    <>
+                      <Pause className="w-3 h-3 text-amber-400" /> Paused
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3 h-3 text-emerald-400" /> Play
+                    </>
+                  )}
+                </button>
               </div>
 
-              {/* Rows */}
-              {[
-                { name: "Airbnb", color: "#ff5a5f", basePrice: "₹12,000" },
-                { name: "Booking.com", color: "#003b95", basePrice: "₹12,000" },
-                { name: "MakeMyTrip", color: "#e5195e", basePrice: "₹12,000" },
-                { name: "Direct Website", color: "#0d9488", basePrice: "₹11,000" },
-              ].map((ch, idx) => (
-                <div key={ch.name} className="grid grid-cols-8 gap-2 items-center py-2.5 border-b border-gray-50 text-xs">
-                  <div className="flex items-center gap-2 pl-2 font-semibold text-gray-800">
-                    <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: ch.color }} />
-                    <span className="truncate">{ch.name}</span>
+              {/* Calendar Simulation Stage */}
+              <div className="overflow-x-auto">
+                <div className="min-w-[540px] text-xs">
+                  {/* Days Row */}
+                  <div className="grid grid-cols-8 gap-1.5 text-center text-gray-400 font-medium mb-3">
+                    <div className="text-left pl-1">Channel</div>
+                    <div>Mon <span className="text-white font-bold">12</span></div>
+                    <div>Tue <span className="text-white font-bold">13</span></div>
+                    <div className="text-[#ff3823] font-bold">Wed 14</div>
+                    <div className="text-[#ff3823] font-bold">Thu 15</div>
+                    <div>Fri <span className="text-white font-bold">16</span></div>
+                    <div>Sat <span className="text-white font-bold">17</span></div>
+                    <div>Sun <span className="text-white font-bold">18</span></div>
                   </div>
 
-                  {/* Mon 12 */}
-                  <div className="text-center py-2 rounded-lg bg-gray-50 text-gray-600">{ch.basePrice}</div>
-                  
-                  {/* Tue 13 */}
-                  <div className="text-center py-2 rounded-lg bg-gray-50 text-gray-600">{ch.basePrice}</div>
+                  {/* Channel Rows */}
+                  {[
+                    { id: "airbnb", name: "Airbnb", logo: "A", color: "#ff5a5f" },
+                    { id: "booking", name: "Booking.com", logo: "B.", color: "#003b95" },
+                    { id: "vrbo", name: "Vrbo", logo: "V", color: "#3563e9" },
+                    { id: "agoda", name: "Agoda", logo: "Ag", color: "#6c3fd1" },
+                    { id: "website", name: "Website", logo: "🌐", color: "#0d9488" },
+                  ].map((row, rIdx) => (
+                    <div key={row.id} className="grid grid-cols-8 gap-1.5 items-center py-2 border-b border-gray-800/50">
+                      <div className="flex items-center gap-2 pl-1 font-semibold text-gray-200 text-[11px]">
+                        <span className="w-5 h-5 rounded-md flex items-center justify-center font-bold text-[10px] shrink-0" style={{ backgroundColor: row.color, color: "#fff" }}>
+                          {row.logo}
+                        </span>
+                        <span className="truncate">{row.name}</span>
+                      </div>
 
-                  {/* Wed 14 & Thu 15 (Target Dates) */}
-                  {idx === 0 ? (
-                    // Airbnb has a booking!
-                    <div className="col-span-2 text-center py-2 rounded-lg bg-[#fde8ea] text-[#b42a30] font-bold border border-[#ff5a5f]/30 flex items-center justify-center gap-1.5 shadow-sm">
-                      <span>Priya · 2 nights (₹24,000)</span>
-                    </div>
-                  ) : simState === "synced" ? (
-                    // Other channels are AUTOMATICALLY CLOSED
-                    <div className="col-span-2 text-center py-2 rounded-lg bg-gray-100 text-gray-400 font-medium flex items-center justify-center gap-1 border border-gray-200/60">
-                      <Lock className="w-3 h-3" /> Closed in 0.8s
-                    </div>
-                  ) : (
-                    // Conflict risk before sync
-                    <div className="col-span-2 text-center py-2 rounded-lg bg-amber-50 text-amber-700 font-semibold border border-dashed border-amber-300 animate-pulse flex items-center justify-center gap-1">
-                      <AlertTriangle className="w-3 h-3 text-amber-600" /> Double Booking Risk!
-                    </div>
-                  )}
+                      {/* Mon 12 */}
+                      <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">180</div>
 
-                  {/* Fri 16 */}
-                  <div className="text-center py-2 rounded-lg bg-gray-50 text-gray-600">{ch.basePrice}</div>
+                      {/* Tue 13 */}
+                      <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">180</div>
 
-                  {/* Sat 17 & Sun 18 (Weekend Surge Rate) */}
-                  <div className="text-center py-2 rounded-lg bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200/50">
-                    ₹15,000 <span className="text-[9px] block text-emerald-600 font-normal">Weekend</span>
-                  </div>
-                  <div className="text-center py-2 rounded-lg bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200/50">
-                    ₹15,000 <span className="text-[9px] block text-emerald-600 font-normal">Weekend</span>
-                  </div>
+                      {/* Target Conflict Dates: Wed 14 & Thu 15 */}
+                      {!syncedMode ? (
+                        // WITHOUT CHANNEL MANAGER: DOUBLE BOOKING COLLISION!
+                        rIdx === 0 ? (
+                          <div className="col-span-2 text-center py-1.5 rounded bg-[#ff5a5f] text-white font-bold text-[11px] shadow-sm animate-pulse">
+                            Priya · 2 nights
+                          </div>
+                        ) : rIdx === 1 ? (
+                          <div className="col-span-2 text-center py-1.5 rounded bg-[#003b95] text-white font-bold text-[11px] shadow-sm border border-red-500 animate-pulse">
+                            Tom · 2 nights
+                          </div>
+                        ) : (
+                          <>
+                            <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">220</div>
+                            <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">220</div>
+                          </>
+                        )
+                      ) : (
+                        // WITH YOURBNB: CLEAN 0.8s CLOSURE!
+                        rIdx === 0 ? (
+                          <div className="col-span-2 text-center py-1.5 rounded bg-[#ff5a5f] text-white font-bold text-[11px] shadow-md">
+                            Priya · 2 nights
+                          </div>
+                        ) : (
+                          <div className="col-span-2 text-center py-1.5 rounded bg-gray-800/90 text-gray-300 font-semibold text-[10px] border border-gray-700 flex items-center justify-center gap-1">
+                            <Lock className="w-2.5 h-2.5 text-gray-400" /> Closed in 0.8s
+                          </div>
+                        )
+                      )}
+
+                      {/* Fri 16 */}
+                      <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">260</div>
+
+                      {/* Sat 17 & Sun 18 */}
+                      <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">280</div>
+                      <div className="text-center py-1.5 rounded bg-gray-900/60 text-gray-400 text-[11px]">240</div>
+                    </div>
+                  ))}
                 </div>
+              </div>
+
+              {/* Status Indicator Banner */}
+              <div className="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between text-xs">
+                {!syncedMode ? (
+                  <div className="flex items-center gap-2 text-red-400 font-semibold">
+                    <AlertTriangle className="w-4 h-4 shrink-0" />
+                    <span>Double booking conflict! Same villa booked on 2 channels simultaneously.</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span>No double bookings. Ever. All other 4 OTAs locked automatically in 0.8s.</span>
+                  </div>
+                )}
+                <span className="text-[11px] text-gray-400 font-mono">
+                  {syncedMode ? "0.8s LIVE SYNC" : "CONFLICT STATE"}
+                </span>
+              </div>
+            </div>
+
+            {/* 6 Feature Tiles (2x3 Grid matching Homeyhuts) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {features.map((item, idx) => (
+                <Link
+                  key={item.title}
+                  href={item.href}
+                  onMouseEnter={() => setActiveFeature(idx)}
+                  className={`p-3.5 rounded-2xl border transition-all text-left flex items-start gap-3 group ${
+                    activeFeature === idx
+                      ? "bg-[#fff1ef] border-[#ff3823]/50 shadow-sm"
+                      : "bg-gray-50/70 border-gray-200/80 hover:bg-gray-100/70"
+                  }`}
+                >
+                  <div className="w-9 h-9 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-700 group-hover:text-[#ff3823] group-hover:border-[#ff3823]/40 transition-colors shrink-0 shadow-sm">
+                    <item.icon className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-bold text-gray-900 group-hover:text-[#ff3823] flex items-center gap-1">
+                      <span className="truncate">{item.title}</span>
+                      {item.badge && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-700">
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-gray-500 leading-snug mt-0.5 line-clamp-1">
+                      {item.desc}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
-          </div>
-
-          {/* Sync Result Banner */}
-          <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-gray-900 to-[#0c1838] text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white">No double bookings. Ever.</h4>
-                <p className="text-xs text-gray-300">
-                  When a guest books on Airbnb, Booking.com & MMT dates instantly lock within 0.8 seconds.
-                </p>
-              </div>
-            </div>
-            <Link
-              href="/start-trial"
-              className="px-4 py-2 rounded-full bg-white text-gray-900 font-semibold text-xs hover:bg-gray-100 transition-colors shrink-0"
-            >
-              See Live Demo
-            </Link>
-          </div>
-
-          {/* Feature Quick Tabs Navigation */}
-          <div className="mt-8 pt-6 border-t border-gray-100 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {featureTabs.map((tab, idx) => (
-              <button
-                key={tab.title}
-                onClick={() => setActiveTab(idx)}
-                className={`p-3 rounded-2xl text-left transition-all ${
-                  activeTab === idx
-                    ? "bg-[#fff1ef] border-2 border-[#ff3823] shadow-sm"
-                    : "bg-gray-50/70 hover:bg-gray-100/70 border border-transparent"
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <tab.icon className={`w-4 h-4 ${activeTab === idx ? "text-[#ff3823]" : "text-gray-600"}`} />
-                  {tab.badge && (
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700">
-                      {tab.badge}
-                    </span>
-                  )}
-                </div>
-                <div className={`text-xs font-bold ${activeTab === idx ? "text-[#ff3823]" : "text-gray-900"}`}>
-                  {tab.title}
-                </div>
-                <div className="text-[10px] text-gray-500 line-clamp-1 leading-tight mt-0.5">{tab.sub}</div>
-              </button>
-            ))}
           </div>
         </div>
       </div>
