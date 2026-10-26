@@ -14,11 +14,11 @@ export default function InteractiveCalendar() {
   const [selectedDates, setSelectedDates] = useState({ start: "29 Jul", end: "31 Jul", prop: "Ocean View Villa" });
 
   const properties = [
-    { id: 1, name: "Ocean View Villa", location: "#1001 · North Goa", rate: "₹12,000", weekend: "₹15,000", type: "4 BHK Villa" },
-    { id: 2, name: "Sunset Luxury Retreat", location: "#1002 · Candolim, Goa", rate: "₹9,500", weekend: "₹12,000", type: "3 BHK Villa" },
-    { id: 3, name: "Hilltop Pine Cottage", location: "#1003 · Old Manali", rate: "₹6,000", weekend: "₹7,500", type: "Wooden Chalet" },
-    { id: 4, name: "Lakeside Bliss Suite", location: "#1004 · Nainital Lake", rate: "₹8,000", weekend: "₹10,500", type: "Boutique Suite" },
-    { id: 5, name: "Urban Loft Penthouse", location: "#1005 · Indiranagar, BLR", rate: "₹5,500", weekend: "₹7,000", type: "Modern Penthouse" },
+    { id: 1, name: "The Unique — Luxury 3BHK", location: "Vikalp Khand, Gomti Nagar", rate: "₹5,500", weekend: "₹6,500", type: "3BHK Residence" },
+    { id: 2, name: "The Dark Blue — Royal 3BHK", location: "Vikalp Khand, Gomti Nagar", rate: "₹4,500", weekend: "₹5,500", type: "3BHK Royal Flat" },
+    { id: 3, name: "Black Beauty — Executive 3BHK", location: "Vikalp Khand, Gomti Nagar", rate: "₹4,500", weekend: "₹5,500", type: "3BHK Suite" },
+    { id: 4, name: "Gomti Grand Villa — Private Estate", location: "Gomti Nagar Extension", rate: "₹8,000", weekend: "₹10,000", type: "Private Villa" },
+    { id: 5, name: "Starlight Blue — Penthouse", location: "Gomti Nagar, Lucknow", rate: "₹6,000", weekend: "₹7,500", type: "Panoramic Penthouse" },
   ];
 
   const bookings = [

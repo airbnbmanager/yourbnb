@@ -149,6 +149,10 @@ export default function Navbar() {
             )}
           </div>
 
+          <Link href="/stays" className="px-3 py-2 rounded-lg hover:text-gray-900 hover:bg-gray-50 transition-colors font-semibold text-[#ff3823] flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#ff3823] animate-pulse" /> Stays
+          </Link>
+
           <Link href="/pricing" className="px-3 py-2 rounded-lg hover:text-gray-900 hover:bg-gray-50 transition-colors">
             Pricing
           </Link>
