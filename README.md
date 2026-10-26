@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yourbnb (or HavenPMS) - Modern Vacation Rental PMS & Direct Booking Platform
 
-## Getting Started
+> Inspired by Homeyhuts, built with Next.js 16 (Turbopack), Tailwind CSS, and TypeScript.
+> Flagship Customer: **The Unique Haven Homes Private Limited** (Lucknow, UP, India).
 
-First, run the development server:
+## 🚀 Live Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **PMS & Channel Manager Presentation (B2B)**:
+   - 50+ OTA Channel Sync (<0.8s sync lock for Airbnb, Booking.com, Agoda, MakeMyTrip, Vrbo).
+   - Realtime Interactive Unified Calendar with live availability inspector.
+   - Dynamic Pricing & Revenue Management.
+   - Multi-property cluster engine (Magic Cluster).
+   - Unified Inbox & Team Co-Host delegation.
+   - Expense tracking & Net profit analytics.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **The Unique Haven Homes Direct Booking Marketplace (B2C)**:
+   - Route: 
+   - Real Lucknow Inventory:
+     - The Unique (GOM-302, Gomti Nagar)
+     - The Dark Blue (GOM-201, Gomti Nagar)
+     - Black Beauty (GOM-102, Gomti Nagar)
+     - Gomti Grand Villa (VIL-101, 4BHK with Private Pool)
+     - Starlight Blue PentHouse (GOM-501, 3BHK Terrace)
+     - The Luxe Haven (LUL-101, Shaheed Path near Lulu Mall)
+   - Magic Cluster multi-room / whole villa booking toggle.
+   - Dynamic Price Breakdown with Direct Booking 15% discount.
+   - Luxury Addon Store (Airport Pickup, Awadhi Chef, Romantic Setup).
+   - Instant WhatsApp Direct Booking CTA.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Deploy on Vercel (100% Free)**:
+   - Connect this GitHub repository  directly on [vercel.com](https://vercel.com).
+   - Framework preset: Next.js.
+   - Zero configuration required.
